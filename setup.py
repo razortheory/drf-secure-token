@@ -10,7 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='drf-secure-token',
     version='0.1',
-    packages=[],
+    packages=['drf_secure_token'],
     include_package_data=True,
     license='BSD License',
     description='Add secure token to djnago-rest-framework',

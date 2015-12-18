@@ -13,7 +13,7 @@ Quick start
         'drf_secure_token',
     ]
 
-2. Add following lines to your settings.py:
+2. Add following lines to your settings.py::
 
     REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': [

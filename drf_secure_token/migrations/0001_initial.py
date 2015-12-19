@@ -15,7 +15,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Token',
             fields=[
-                ('key', models.CharField(max_length=40, serialize=False, primary_key=True)),
+                ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
+                ('key', models.CharField(unique=True, max_length=40)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('user', models.ForeignKey(related_name='user_auth_tokens', to=settings.AUTH_USER_MODEL)),
             ],
@@ -23,5 +24,6 @@ class Migration(migrations.Migration):
                 'verbose_name': 'Token',
                 'verbose_name_plural': 'Tokens',
             },
+            bases=(models.Model,),
         ),
     ]

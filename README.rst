@@ -22,4 +22,11 @@ Quick start
          ]
     }
 
-3. Run `python manage.py migrate` to create the drf_secure_token models.
+3. For updating token add this middleware to your MIDDLEWARE_CLASSES::
+
+    MIDDLEWARE_CLASSES = (
+        ...
+        'drf_secure_token.middleware.UpdateTokenMiddleware',
+    )
+
+4. Run `python manage.py migrate` to create the drf_secure_token models.

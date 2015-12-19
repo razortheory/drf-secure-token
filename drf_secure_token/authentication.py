@@ -20,7 +20,7 @@ class SecureTokenAuthentication(TokenAuthentication):
             token = self.model.objects.select_related('user').get(key=key)
         except self.model.DoesNotExist:
             raise exceptions.AuthenticationFailed(_('Invalid token.'))
-        if TOKEN_AGE and token.expire_in > timezone.now():
+        if TOKEN_AGE and token.expire_in < timezone.now():
             token.delete()
             raise exceptions.AuthenticationFailed(_('Token has expired.'))
 

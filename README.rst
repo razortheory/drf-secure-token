@@ -29,4 +29,8 @@ Quick start
         'drf_secure_token.middleware.UpdateTokenMiddleware',
     )
 
+4. Add TOKEN_AGE to your settings::
+
+    TOKEN_AGE = 60*10 # 10 min
+
 4. Run `python manage.py migrate` to create the drf_secure_token models.

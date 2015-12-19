@@ -10,16 +10,17 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AlterField(
+            model_name='token',
+            name='key',
+            field=models.CharField(unique=True, max_length=40, primary_key=False),
+            preserve_default=True,
+        ),
         migrations.AddField(
             model_name='token',
             name='id',
             field=models.AutoField(auto_created=True, primary_key=True, default=None, serialize=False, verbose_name='ID'),
             preserve_default=False,
         ),
-        migrations.AlterField(
-            model_name='token',
-            name='key',
-            field=models.CharField(unique=True, max_length=40),
-            preserve_default=True,
-        ),
+
     ]

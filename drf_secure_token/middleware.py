@@ -6,8 +6,10 @@ class UpdateTokenMiddleware(object):
     def process_response(self, request, response):
         auth_token = request.META.get('HTTP_AUTHORIZATION', ' ').split(' ')
         if request.user.is_authenticated() and auth_token[0].lower() == 'token':
-            token = Token.objects.filter(key=auth_token[1]).first()
-            if token:
-                response['X-Token'] = token.update_key()
+            tokens = Token.objects.filter(key=auth_token[1])
+            if tokens.count():
+                new_token = Token.generate_key()
+                tokens.update(key=new_token)
+                response['X-Token'] = new_token
         return response
 

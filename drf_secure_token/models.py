@@ -18,16 +18,12 @@ class Token(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.key = self.generate_key()
+            self.key = Token.generate_key()
         return super(Token, self).save(*args, **kwargs)
 
-    def generate_key(self):
+    @staticmethod
+    def generate_key():
         return str(uuid.uuid4())
-
-    def update_key(self):
-        generated_key = self.generate_key()
-        self.update(key=generated_key)
-        return generated_key
 
     def __unicode__(self):
         return self.key

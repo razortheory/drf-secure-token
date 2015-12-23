@@ -1,4 +1,3 @@
-import os
 import uuid
 import datetime
 from django.conf import settings
@@ -10,7 +9,7 @@ TOKEN_AGE = getattr(settings, 'TOKEN_AGE', 0)
 
 
 class Token(models.Model):
-    key = models.CharField(max_length=40, unique=True)
+    key = models.CharField(max_length=40, unique=True, null=True, blank=True, default=None)
     user = models.ForeignKey(AUTH_USER_MODEL, related_name='user_auth_tokens')
     created = models.DateTimeField(auto_now_add=True)
     expire_in = models.DateTimeField(default=datetime.datetime.now)

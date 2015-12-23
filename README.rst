@@ -5,7 +5,7 @@ DRF Secure Token
 Quick start
 -----------
 
-1. Add "polls" to your INSTALLED_APPS setting like this::
+1. Add "drf_secure_token" to your INSTALLED_APPS setting like this::
 
     INSTALLED_APPS = [
         ...

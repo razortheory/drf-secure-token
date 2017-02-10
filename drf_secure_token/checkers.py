@@ -3,7 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from rest_framework.settings import perform_import
 
-from drf_secure_token.settings import TOKEN_CHECKERS
+from drf_secure_token.settings import settings as token_settings
 
 
 class BaseChecker(object):
@@ -39,7 +39,7 @@ class DeadTokenChecker(ExpireTokenChecker):
 
 
 def init_checkers():
-    checker_classes = perform_import(TOKEN_CHECKERS, 'TOKEN_CHECKERS')
+    checker_classes = perform_import(token_settings.TOKEN_CHECKERS, 'TOKEN_CHECKERS')
     return map(lambda klass: klass(), checker_classes)
 
 

@@ -1,7 +1,7 @@
 from django.utils import timezone
 
 from drf_secure_token.models import Token
-from drf_secure_token.settings import UPDATE_TOKEN
+from drf_secure_token.settings import settings as token_settings
 
 
 class UpdateTokenMiddleware(object):
@@ -10,7 +10,7 @@ class UpdateTokenMiddleware(object):
         if not isinstance(token, Token):
             return response
 
-        if UPDATE_TOKEN:
+        if token_settings.UPDATE_TOKEN:
             now = timezone.now()
 
             if not token.marked_for_delete and token.expire_in < now < token.dead_in:

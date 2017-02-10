@@ -18,12 +18,12 @@ setup(
     url='',
     author='Tima Akulich',
     author_email='tima.akulich@gmail.com',
-    install_requires=['djangorestframework',],
+    install_requires=['djangorestframework', ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License', # example license
+        'License :: OSI Approved :: BSD License',  # example license
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',

@@ -7,8 +7,8 @@ from django.utils import timezone
 from django.utils.six import python_2_unicode_compatible
 from rest_framework import exceptions
 
-from drf_secure_token.checkers import checkers
-from drf_secure_token.settings import TOKEN_AGE, MUTABLE_PERIOD
+from drf_secure_token import checkers
+from drf_secure_token.settings import settings as token_settings
 
 
 @python_2_unicode_compatible
@@ -33,7 +33,7 @@ class BaseToken(models.Model):
         return super(BaseToken, self).save(*args, **kwargs)
 
     def check_token(self):
-        for checker in checkers:
+        for checker in checkers.checkers:
             if not checker.check(self):
                 raise exceptions.AuthenticationFailed(checker.error_message)
 
@@ -46,7 +46,7 @@ class ExpiredTokenMixin(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.expire_in = timezone.now() + datetime.timedelta(seconds=TOKEN_AGE)
+            self.expire_in = timezone.now() + datetime.timedelta(seconds=token_settings.TOKEN_AGE)
         super(ExpiredTokenMixin, self).save(*args, **kwargs)
 
 
@@ -59,6 +59,6 @@ class DyingTokenMixin(ExpiredTokenMixin):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            self.expire_in = timezone.now() + datetime.timedelta(seconds=TOKEN_AGE)
-            self.dead_in = self.expire_in + datetime.timedelta(seconds=MUTABLE_PERIOD)
+            self.expire_in = timezone.now() + datetime.timedelta(seconds=token_settings.TOKEN_AGE)
+            self.dead_in = self.expire_in + datetime.timedelta(seconds=token_settings.MUTABLE_PERIOD)
         return super(ExpiredTokenMixin, self).save(*args, **kwargs)

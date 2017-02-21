@@ -5,7 +5,7 @@ DEFAULT_SETTINGS = {
     'TOKEN_AGE': 0,
     'UPDATE_TOKEN': not django_settings.DEBUG,
 
-    'MUTABLE_PERIOD': 60 * 60 * 24 * 7,  # One week
+    'MUTABLE_PERIOD': 60 * 5,  # Five minutes
 
     'REMOVE_TOKENS_THROUGH_CELERY': False,
 

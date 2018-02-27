@@ -40,7 +40,7 @@ class DeadTokenChecker(ExpireTokenChecker):
 
 def init_checkers():
     checker_classes = perform_import(token_settings.TOKEN_CHECKERS, 'TOKEN_CHECKERS')
-    return map(lambda klass: klass(), checker_classes)
+    return list(map(lambda klass: klass(), checker_classes))
 
 
 checkers = init_checkers()

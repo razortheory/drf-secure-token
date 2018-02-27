@@ -3,8 +3,14 @@ from django.utils import timezone
 from drf_secure_token.models import Token
 from drf_secure_token.settings import settings as token_settings
 
+try:
+    # Using MiddlewareMixin to add compatibility level between the new and old middleware styles.
+    from django.utils.deprecation import MiddlewareMixin as MiddlewareParent
+except ImportError:
+    MiddlewareParent = object
 
-class UpdateTokenMiddleware(object):
+
+class UpdateTokenMiddleware(MiddlewareParent):
     def process_response(self, request, response):
         token = getattr(request, 'auth', None)
         if not isinstance(token, Token):
@@ -22,4 +28,3 @@ class UpdateTokenMiddleware(object):
                 response['X-Token'] = new_token.key
 
         return response
-

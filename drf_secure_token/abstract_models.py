@@ -14,7 +14,7 @@ from drf_secure_token.settings import settings as token_settings
 @python_2_unicode_compatible
 class BaseToken(models.Model):
     key = models.CharField(max_length=40, unique=True, null=True, blank=True, default=None)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_auth_tokens')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_auth_tokens', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -39,7 +39,7 @@ class BaseToken(models.Model):
 
 
 class ExpiredTokenMixin(models.Model):
-    expire_in = models.DateTimeField(default=datetime.datetime.now)
+    expire_in = models.DateTimeField(default=timezone.now)
 
     class Meta:
         abstract = True
@@ -51,7 +51,7 @@ class ExpiredTokenMixin(models.Model):
 
 
 class DyingTokenMixin(ExpiredTokenMixin):
-    dead_in = models.DateTimeField(default=datetime.datetime.now)
+    dead_in = models.DateTimeField(default=timezone.now)
     marked_for_delete = models.BooleanField(default=False)
 
     class Meta:

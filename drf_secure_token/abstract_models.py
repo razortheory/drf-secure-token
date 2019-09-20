@@ -14,7 +14,11 @@ from drf_secure_token.settings import settings as token_settings
 
 @python_2_unicode_compatible
 class BaseToken(models.Model):
-    key = models.CharField(max_length=40, unique=True, null=True, blank=True, default=None)
+    @staticmethod
+    def generate_key():
+        return str(uuid.uuid4())
+
+    key = models.CharField(max_length=40, unique=True, blank=True, default=generate_key.__func__)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user_auth_tokens', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
@@ -24,15 +28,6 @@ class BaseToken(models.Model):
     def __str__(self):
         return self.key
 
-    @staticmethod
-    def generate_key():
-        return str(uuid.uuid4())
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.key = self.generate_key()
-        return super(BaseToken, self).save(*args, **kwargs)
-
     def check_token(self):
         for checker in checkers.checkers:
             if not checker.check(self):
@@ -40,26 +35,23 @@ class BaseToken(models.Model):
 
 
 class ExpiredTokenMixin(models.Model):
-    expire_in = models.DateTimeField(default=timezone.now)
+    @staticmethod
+    def default_expire_time():
+        return timezone.now() + datetime.timedelta(seconds=token_settings.TOKEN_AGE)
+
+    expire_in = models.DateTimeField(default=default_expire_time.__func__)
 
     class Meta:
         abstract = True
 
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.expire_in = timezone.now() + datetime.timedelta(seconds=token_settings.TOKEN_AGE)
-        super(ExpiredTokenMixin, self).save(*args, **kwargs)
-
 
 class DyingTokenMixin(ExpiredTokenMixin):
-    dead_in = models.DateTimeField(default=timezone.now)
+    @staticmethod
+    def default_dead_time():
+        return ExpiredTokenMixin.default_expire_time() + datetime.timedelta(seconds=token_settings.MUTABLE_PERIOD)
+
+    dead_in = models.DateTimeField(default=default_dead_time.__func__)
     marked_for_delete = models.BooleanField(default=False)
 
     class Meta:
         abstract = True
-
-    def save(self, *args, **kwargs):
-        if not self.pk:
-            self.expire_in = timezone.now() + datetime.timedelta(seconds=token_settings.TOKEN_AGE)
-            self.dead_in = self.expire_in + datetime.timedelta(seconds=token_settings.MUTABLE_PERIOD)
-        return super(ExpiredTokenMixin, self).save(*args, **kwargs)

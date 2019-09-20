@@ -1,0 +1,15 @@
+[flake8]
+max-line-length = 120
+ignore =
+    ; PyFlakes errors
+    ; F405 name may be undefined, or defined from star imports: module
+    F405
+    W503
+    ; does not apply to python3. https://github.com/PyCQA/bandit/issues/402
+    S322
+    ; disable paranoidal checking for password/token in strings
+    S105
+max-complexity = 10
+
+exclude =
+    */migrations

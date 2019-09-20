@@ -1,4 +1,5 @@
 import os
+
 from setuptools import setup
 
 with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
@@ -18,7 +19,7 @@ setup(
     url='',
     author='Tima Akulich',
     author_email='tima.akulich@gmail.com',
-    install_requires=['djangorestframework', ],
+    install_requires=['djangorestframework'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

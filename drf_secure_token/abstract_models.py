@@ -5,6 +5,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 from django.utils.six import python_2_unicode_compatible
+
 from rest_framework import exceptions
 
 from drf_secure_token import checkers

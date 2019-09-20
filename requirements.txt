@@ -1,4 +1,0 @@
-Django
-djangorestframework
-mock
-celery

@@ -1,11 +1,10 @@
 from django.utils import timezone
 
-from celery.task import periodic_task
 from celery.schedules import crontab
+from celery.task import periodic_task
 
 from drf_secure_token.models import Token
 from drf_secure_token.settings import settings as token_settings
-
 
 if token_settings.REMOVE_TOKENS_THROUGH_CELERY:
     @periodic_task(run_every=crontab(minute=0))

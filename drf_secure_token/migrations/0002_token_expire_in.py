@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models, migrations
-import datetime
+from django.db import migrations, models
+from django.utils import timezone
 
 
 class Migration(migrations.Migration):
@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='token',
             name='expire_in',
-            field=models.DateTimeField(default=datetime.datetime.now),
+            field=models.DateTimeField(default=timezone.now),
             preserve_default=True,
         ),
     ]

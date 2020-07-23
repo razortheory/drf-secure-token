@@ -1,6 +1,5 @@
 from django.conf import settings as django_settings
 
-
 DEFAULT_SETTINGS = {
     'TOKEN_AGE': 0,
     'UPDATE_TOKEN': not django_settings.DEBUG,
@@ -23,7 +22,7 @@ class Settings(object):
 
     def __getattr__(self, item):
         if item not in self.default_settings:
-            raise AttributeError("Invalid settings: '%s'" % item)
+            raise AttributeError("Invalid settings: '{0}'".format(item))
 
         return getattr(self.settings, item, self.default_settings[item])
 

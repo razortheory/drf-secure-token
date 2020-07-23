@@ -1,4 +1,5 @@
 import os
+
 from setuptools import setup
 
 with open(os.path.join(os.path.dirname(__file__), 'README.rst')) as readme:
@@ -9,7 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='drf-secure-token',
-    version='1.0.3',
+    version='1.0.4',
     packages=['drf_secure_token', 'drf_secure_token/migrations'],
     include_package_data=True,
     license='BSD License',
@@ -18,7 +19,7 @@ setup(
     url='',
     author='Tima Akulich',
     author_email='tima.akulich@gmail.com',
-    install_requires=['djangorestframework', ],
+    install_requires=['djangorestframework'],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',

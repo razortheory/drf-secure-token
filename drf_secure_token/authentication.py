@@ -1,7 +1,7 @@
-from rest_framework.authentication import TokenAuthentication
+from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import exceptions
-from django.utils.translation import ugettext_lazy as _
+from rest_framework.authentication import TokenAuthentication
 
 from drf_secure_token.models import Token
 

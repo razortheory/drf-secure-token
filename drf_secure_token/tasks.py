@@ -25,7 +25,8 @@ if CELERY_VERSION < (5, 0, 0):
         from celery.task import task
         delete_old_tokens = task(_delete_old_tokens)
 else:
-    delete_old_tokens = _delete_old_tokens
+    from celery import shared_task
+    delete_old_tokens = shared_task(_delete_old_tokens)
 
     DELETE_OLD_TOKENS = {
         'task': 'drf_secure_token.tasks.delete_old_tokens',

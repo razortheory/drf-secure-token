@@ -7,7 +7,7 @@ from drf_secure_token.models import Token
 from drf_secure_token.settings import settings as token_settings
 
 
-def _delete_old_tokens():
+def delete_old_tokens():
     now = timezone.now()
 
     qs = Token.objects.all()
@@ -20,13 +20,13 @@ def _delete_old_tokens():
 if CELERY_VERSION < (5, 0, 0):
     if token_settings.REMOVE_TOKENS_THROUGH_CELERY:
         from celery.task import periodic_task
-        delete_old_tokens = periodic_task(run_every=crontab(minute=0))(_delete_old_tokens)
+        delete_old_tokens = periodic_task(run_every=crontab(minute=0))(delete_old_tokens)
     else:
         from celery.task import task
-        delete_old_tokens = task(_delete_old_tokens)
+        delete_old_tokens = task(delete_old_tokens)
 else:
     from celery import shared_task
-    delete_old_tokens = shared_task(_delete_old_tokens)
+    delete_old_tokens = shared_task(delete_old_tokens)
 
     DELETE_OLD_TOKENS = {
         'task': 'drf_secure_token.tasks.delete_old_tokens',

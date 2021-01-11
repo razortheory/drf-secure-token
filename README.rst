@@ -45,9 +45,12 @@ Quick start
 
 6.2 Celery 5, add periodic task manually::
 
-    @app.on_after_configure.connect
+    @app.on_after_finalize.connect
     def setup_periodic_tasks(sender, **kwargs):
         from drf_secure_token.tasks import DELETE_OLD_TOKENS
-        sender.add_periodic_task(**DELETE_OLD_TOKENS)
+
+        app.conf.beat_schedule.update({
+            'drf_secure_token.tasks.delete_old_tokens': DELETE_OLD_TOKENS,
+        })
 
 7. Run `python manage.py migrate` to create the drf_secure_token models.

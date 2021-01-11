@@ -43,10 +43,14 @@ Quick start
 
     REMOVE_TOKENS_THROUGH_CELERY = True
 
-6.2 Celery 5+, update scheduler to run task periodically::
+6.2 Celery 5, add periodic task manually::
 
     @app.on_after_configure.connect
     def setup_periodic_tasks(sender, **kwargs):
-        sender.add_periodic_task(drf_secure_token.tasks.DELETE_OLD_TOKENS)
+        sender.add_periodic_task(**DELETE_OLD_TOKENS)
+
+    or with scheduler config
+
+    'drf_secure_token.tasks.delete_old_tokens': DELETE_OLD_TOKENS,
 
 7. Run `python manage.py migrate` to create the drf_secure_token models.

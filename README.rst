@@ -37,4 +37,20 @@ Quick start
 
     TOKEN_AGE = 60*10 # 10 min
 
-6. Run `python manage.py migrate` to create the drf_secure_token models.
+6. (Optional) To cleanup dead tokens celery can be used. Way to enable depends from celery version
+
+6.1 Celery 4, just enable it with settings::
+
+    REMOVE_TOKENS_THROUGH_CELERY = True
+
+6.2 Celery 5, add periodic task manually::
+
+    @app.on_after_finalize.connect
+    def setup_periodic_tasks(sender, **kwargs):
+        from drf_secure_token.tasks import DELETE_OLD_TOKENS
+
+        app.conf.beat_schedule.update({
+            'drf_secure_token.tasks.delete_old_tokens': DELETE_OLD_TOKENS,
+        })
+
+7. Run `python manage.py migrate` to create the drf_secure_token models.

@@ -2,7 +2,7 @@ from django.conf import settings as django_settings
 
 DEFAULT_SETTINGS = {
     'TOKEN_AGE': 0,
-    'UPDATE_TOKEN': not django_settings.DEBUG,
+    'UPDATE_TOKEN': not getattr(django_settings, 'DEBUG', False),
 
     'MUTABLE_PERIOD': 60 * 60 * 24 * 7,  # One week
 

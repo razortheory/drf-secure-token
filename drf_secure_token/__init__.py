@@ -1,1 +1,4 @@
-default_app_config = 'drf_secure_token.apps.DRFSecureTokenConfig'
+import django
+
+if django.VERSION < (3, 2):
+    default_app_config = 'drf_secure_token.apps.DRFSecureTokenConfig'

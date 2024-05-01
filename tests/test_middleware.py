@@ -30,10 +30,12 @@ class MiddlewareTestCase(APITestCase):
             authenticators=[SecureTokenAuthentication()],
         )
         request._authenticate()
-        response = HttpResponse()
 
-        middleware = UpdateTokenMiddleware()
-        response = middleware.process_response(request._request, response)
+        def get_response(request):
+            return HttpResponse()
+
+        middleware = UpdateTokenMiddleware(get_response)
+        response = middleware(request._request)
 
         new_token = response.get('X-Token', None)
         self.assertIsNotNone(new_token)
@@ -58,10 +60,12 @@ class MiddlewareTestCase(APITestCase):
             authenticators=[SecureTokenAuthentication()],
         )
         request._authenticate()
-        response = HttpResponse()
 
-        middleware = UpdateTokenMiddleware()
-        response = middleware.process_response(request._request, response)
+        def get_response(request):
+            return HttpResponse()
+
+        middleware = UpdateTokenMiddleware(get_response)
+        response = middleware(request._request)
 
         new_token = response.get('X-Token', None)
         self.assertIsNone(new_token)

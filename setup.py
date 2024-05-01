@@ -10,11 +10,11 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='drf-secure-token',
-    version='1.1.0',
+    version='1.2.0',
     packages=['drf_secure_token', 'drf_secure_token/migrations'],
     include_package_data=True,
     license='BSD License',
-    description='Add secure token to djnago-rest-framework',
+    description='Add secure token to django-rest-framework',
     long_description=README,
     url='',
     author='Tima Akulich',
